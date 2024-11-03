@@ -3,6 +3,9 @@
 Servo steeringServo;  // Servo for steering
 const int motorPin = 5; // Pin for the DC motor
 const int steeringPin = 9; // Pin for the servo motor
+const int buttonPin = 7;     // Button to start the car's movement
+bool isStarted = false;      // Flag to check if the button is pressed
+
 
 // Parameters (modify these to suit your hardware)
 const int speed = 200; // Speed for DC motor (0-255)
@@ -13,10 +16,22 @@ const unsigned long turnDuration = 2000; // Time to make the turn with 1.5m radi
 
 void setup() {
   pinMode(motorPin, OUTPUT);
+  pinMode(buttonPin, INPUT_PULLUP); // Set button pin as input with pull-up
+
   steeringServo.attach(steeringPin);
+}
   
-  // Start by moving straight
-  steeringServo.write(90); // 90 degrees for straight steering
+void loop() {
+  if (digitalRead(buttonPin) == LOW) { // Check if button is pressed
+    delay(50);                         // Debounce delay
+    if (digitalRead(buttonPin) == LOW) {
+      isStarted = true;
+    }
+  }
+
+  if (isStarted) {
+
+steeringServo.write(90); // 90 degrees for straight steering
   analogWrite(motorPin, speed); // Move forward
   delay(moveDuration5m); // Move 5 meters
   
@@ -40,6 +55,6 @@ void setup() {
   analogWrite(motorPin, 0); // Stop the DC motor
 }
 
-void loop() {
-  // No repeated actions needed
-}
+    
+  }
+
