@@ -1,7 +1,8 @@
 #include <Servo.h>
 
 Servo steeringServo;  // Servo for steering
-const int motorPin = 5; // Pin for the DC motor
+const int motor1Pin = 5; // Pin for the DC motor
+const int motor2Pin = 6; // Pin for the DC motor
 const int steeringPin = 9; // Pin for the servo motor
 const int buttonPin = 7;     // Button to start the car's movement
 bool isStarted = false;      // Flag to check if the button is pressed
@@ -15,10 +16,11 @@ const unsigned long moveDuration1m = 1000; // Time to move 1 meter
 const unsigned long turnDuration = 2000; // Time to make the turn with 1.5m radius
 
 void setup() {
-  pinMode(motorPin, OUTPUT);
+  pinMode(motor1Pin, OUTPUT);
+  pinMode(motor2Pin, OUTPUT);
+
   pinMode(buttonPin, INPUT_PULLUP); // Set button pin as input with pull-up
 
-  steeringServo.attach(steeringPin);
 }
   
 void loop() {
@@ -31,30 +33,31 @@ void loop() {
 
   if (isStarted) {
 
-steeringServo.write(90); // 90 degrees for straight steering
-  analogWrite(motorPin, speed); // Move forward
+  analogWrite(motor1Pin, speed); // Move forward
+  analogWrite(motor2Pin, speed); // Move forward
   delay(moveDuration5m); // Move 5 meters
   
   // First turn (left, 1.5m radius)
-  steeringServo.write(90 - turnAngle); // Turn left
+  digitalWrite(steeringPin, HIGH);
   delay(turnDuration); // Time for the left turn
-  steeringServo.write(90); // Straighten the wheels again
+  digitalWrite(steeringPin, LOW); // Straighten the wheels again
   
   // Move forward 1 meter
   delay(moveDuration1m);
   
   // Second turn (left, 1.5m radius)
-  steeringServo.write(90 - turnAngle); // Turn left
+  digitalWrite(steeringPin, HIGH); // Straighten the wheels again
   delay(turnDuration); // Time for the left turn
-  steeringServo.write(90); // Straighten the wheels again
+  digitalWrite(steeringPin, LOW); // Straighten the wheels again
   
   // Move forward 5 meters
   delay(moveDuration5m);
   
   // Stop the car
-  analogWrite(motorPin, 0); // Stop the DC motor
+  analogWrite(motor1Pin, 0); // Stop the DC motor
+  analogWrite(motor2Pin, 0); // Stop the DC motor
+
 }
 
     
   }
-
