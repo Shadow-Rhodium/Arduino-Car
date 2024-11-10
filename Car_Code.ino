@@ -1,11 +1,12 @@
-#include <Servo.h>
+int motor1pin1 = 2;
+int motor1pin2 = 3;
 
-Servo steeringServo;  // Servo for steering
-const int motor1Pin = 5; // Pin for the DC motor
-const int motor2Pin = 6; // Pin for the DC motor
+int motor2pin1 = 4;
+int motor2pin2 = 5;
+
 const int steeringPin = 9; // Pin for the servo motor
 const int buttonPin = 7;     // Button to start the car's movement
-bool isStarted = false;      // Flag to check if the button is pressed
+int isStarted = 0;      // Flag to check if the button is pressed
 
 
 // Parameters (modify these to suit your hardware)
@@ -13,28 +14,43 @@ const int speed = 200; // Speed for DC motor (0-255)
 const int turnAngle = 45; // Angle for a 1.5 meter radius left turn
 const unsigned long moveDuration5m = 5000; // Time to move 5 meters
 const unsigned long moveDuration1m = 1000; // Time to move 1 meter
-const unsigned long turnDuration = 2000; // Time to make the turn with 1.5m radius
+const unsigned long turnDuration = 2500; // Time to make the turn with 1.5m radius
 
 void setup() {
-  pinMode(motor1Pin, OUTPUT);
-  pinMode(motor2Pin, OUTPUT);
+  // put your setup code here, to run once:
+  pinMode(motor1pin1, OUTPUT);
+  pinMode(motor1pin2, OUTPUT);
+  pinMode(motor2pin1, OUTPUT);
+  pinMode(motor2pin2, OUTPUT);
 
-  pinMode(buttonPin, INPUT_PULLUP); // Set button pin as input with pull-up
+pinMode(steeringPin, OUTPUT);
+
+  pinMode(buttonPin, INPUT); // Set button pin as input with pull-up
+
+  
 
 }
-  
+
 void loop() {
-  if (digitalRead(buttonPin) == LOW) { // Check if button is pressed
-    delay(50);                         // Debounce delay
-    if (digitalRead(buttonPin) == LOW) {
-      isStarted = true;
-    }
+  // put your main code here, to run repeatedly:
+
+  
+
+  if (digitalRead(buttonPin) == HIGH) { // Check if button is pressed
+
+    isStarted = 1738;
   }
 
-  if (isStarted) {
+  if (isStarted == 1738) {
 
-  analogWrite(motor1Pin, speed); // Move forward
-  analogWrite(motor2Pin, speed); // Move forward
+    delay(1000);
+
+  digitalWrite(motor1pin1, LOW);
+  digitalWrite(motor1pin2, HIGH);
+
+  digitalWrite(motor2pin1, HIGH);
+  digitalWrite(motor2pin2, LOW);
+
   delay(moveDuration5m); // Move 5 meters
   
   // First turn (left, 1.5m radius)
@@ -52,12 +68,14 @@ void loop() {
   
   // Move forward 5 meters
   delay(moveDuration5m);
-  
-  // Stop the car
-  analogWrite(motor1Pin, 0); // Stop the DC motor
-  analogWrite(motor2Pin, 0); // Stop the DC motor
+
+
+  digitalWrite(motor1pin2, LOW);
+  digitalWrite(motor2pin1, LOW);
+     isStarted = 1;
+
+
+  }
+
 
 }
-
-    
-  }
