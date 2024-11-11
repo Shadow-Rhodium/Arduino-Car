@@ -12,9 +12,9 @@ int isStarted = 0;      // Flag to check if the button is pressed
 // Parameters (modify these to suit your hardware)
 const int speed = 200; // Speed for DC motor (0-255)
 const int turnAngle = 45; // Angle for a 1.5 meter radius left turn
-const unsigned long moveDuration5m = 5000; // Time to move 5 meters
-const unsigned long moveDuration1m = 1000; // Time to move 1 meter
-const unsigned long turnDuration = 2500; // Time to make the turn with 1.5m radius
+const unsigned long moveDuration5m = 10000; // Time to move 5 meters
+const unsigned long moveDuration1m = 2000; // Time to move 1 meter
+const unsigned long turnDuration = 5000; // Time to make the turn with 1.5m radius
 
 void setup() {
   // put your setup code here, to run once:
