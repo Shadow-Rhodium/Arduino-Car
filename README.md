@@ -6,5 +6,5 @@
 
 ## Final Result:
 
-![](https://github.com/Shadow-Rhodium/Arduino-Car/blob/main/IMG_0531.jpg?raw=true)
+![](https://github.com/Shadow-Rhodium/Arduino-Car/blob/main/IMG_0531.png?raw=true)
 
